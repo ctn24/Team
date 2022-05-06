@@ -129,6 +129,8 @@ rules:
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
+#MOD   namespace: ingress-nginx
+namespace: ingress-nginx
 metadata:
   name: nginx-ingress-role-nisa-binding
   namespace: ingress-nginx
@@ -147,6 +149,8 @@ subjects:
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
+#Mod   namespace: ingress-nginx
+namespace: ingress-nginx
 metadata:
   name: nginx-ingress-clusterrole-nisa-binding
   labels:
