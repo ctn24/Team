@@ -24,7 +24,7 @@ jobs:
       uses: actions/checkout@v2
  
     - name: Terraform Format
-      run: terraform format
+      run: terraform fmt
          
     - name: Terraform Init
       run: terraform init
