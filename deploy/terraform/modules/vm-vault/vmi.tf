@@ -110,8 +110,9 @@ resource "azurerm_virtual_machine" "vm-vault" {
     disable_password_authentication = false
   
     ssh_keys{
-      key_data = file("~/.ssh/tf_id_rsa.pub")
-      path = "/home/${var.admin_username}/.ssh/authorized_keys"
+      //key_data = file("~/.ssh/tf_id_rsa.pub")
+      key_data = file("tf_id_rsa.pub")
+      path = "../../"
     }
   }
   
