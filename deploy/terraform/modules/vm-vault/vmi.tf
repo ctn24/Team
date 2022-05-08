@@ -84,7 +84,7 @@ resource "azurerm_virtual_machine" "vm-vault" {
   name                             = "vm-vault-tf"
   location                         = var.location
   resource_group_name              = var.rg_name
-  network_interface_ids            = ["${azurerm_network_interface.nic.id}"]
+  network_interface_ids            = [azurerm_network_interface.nic.id]
   vm_size                          = var.vm_size
   delete_os_disk_on_termination    = true
   delete_data_disks_on_termination = true
