@@ -32,21 +32,22 @@ resource "azurerm_resource_group" "rg-centralus" {
   name     = "rg-tf-centraus"
   location = "Central Us"
 }
-module "vm-vault" {
-  source  = "./modules/vm-vault"
-  rg_name = azurerm_resource_group.rg-centralus.name
-  #rg_name          = module.resource_group.rg-name
-  #location         = module.resource_group.rg-location
-  location         = azurerm_resource_group.rg-centralus.location
-  vault_image_name = var.vault_image_name
-  admin_username   = var.admin_username
-  admin_password   = var.admin_password
-  vm_size          = var.vm_size
 
-  depends_on = [
-    module.resource_group
-  ]
-}
+# module "vm-vault" {
+#   source  = "./modules/vm-vault"
+#   rg_name = azurerm_resource_group.rg-centralus.name
+#   #rg_name          = module.resource_group.rg-name
+#   #location         = module.resource_group.rg-location
+#   location         = azurerm_resource_group.rg-centralus.location
+#   vault_image_name = var.vault_image_name
+#   admin_username   = var.admin_username
+#   admin_password   = var.admin_password
+#   vm_size          = var.vm_size
+
+#   depends_on = [
+#     module.resource_group
+#   ]
+# }
 
 
 /*

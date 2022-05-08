@@ -1,8 +1,8 @@
 # Azure GUIDS
-variable "subscription_id" {}
-variable "client_id" {}
-variable "client_secret" {}
-variable "tenant_id" {}
+variable "subscription_id" { default = null }
+variable "client_id" { default = null }
+variable "client_secret" { default = null }
+variable "tenant_id" { default = null }
 
 # Resource Group/Location
 variable "location" { default = "westus" }
@@ -20,6 +20,5 @@ variable "aks_name" { default = "aks-tf" }
 # VM - vault
 variable "vault_image_name" { default = "Vault-image" }
 variable "vm_size" { default = "D2ads_v5" }
-variable "admin_username" {}
-variable "admin_password" {}
-
+variable "admin_username" { default = null }
+variable "admin_password" { default = null }
