@@ -1,11 +1,11 @@
-name: "Terraform"
+name: "Destroy Terraform"
 on:
   workflow_dispatch:
     inputs:
       env:
         description: 'Environment'
         required: true
-        default: 'dev'
+        default: 'main'
 
 jobs:
   destroy:

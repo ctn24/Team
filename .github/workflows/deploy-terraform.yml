@@ -1,13 +1,8 @@
-name: "Terraform"
+name: "Deploy Terraform"
 on:
   workflow_dispatch:
-    inputs:
-      env:
-        description: 'Environment'
-        required: true
-        default: 'dev'
-    # branches:
-    #   - main
+    branches:
+      - main
 
 jobs:
   terraform:
