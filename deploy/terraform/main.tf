@@ -11,6 +11,10 @@ module "container_registry" {
   location = var.rg_location
 }
 
+output "acr_credentials" {
+  value = module.container_registry.admin-password
+}
+
 module "cosmosdb" {
   source      = "./modules/cosmos"
   cosmos_name = var.cosmos_name

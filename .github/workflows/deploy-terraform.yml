@@ -1,4 +1,4 @@
-name: "Deploy Terraform"
+name: "Terraform"
 on:
   workflow_dispatch:
     branches:
@@ -62,6 +62,9 @@ jobs:
           client_id: ${{ env.ARM_CLIENT_ID }}
           client_secret: ${{ env.ARM_CLIENT_SECRET }}
           tenant_id: ${{ env.ARM_TENANT_ID }}
+          acr_password: 123456
+          admin_username: Darkirondan
+          admin_password: DanTheMan2022
  
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
@@ -75,3 +78,11 @@ jobs:
           client_id: ${{ env.ARM_CLIENT_ID }}
           client_secret: ${{ env.ARM_CLIENT_SECRET }}
           tenant_id: ${{ env.ARM_TENANT_ID }}
+          acr_password: 123456
+          admin_username: Darkirondan
+          admin_password: DanTheMan2022
+
+    - name: Save credentials k8s
+      run: terraform output acr_credentials >> $ARC_PASSWORD
+    - name: Test
+      run: echo $GITHUB_SHA_SHORT
