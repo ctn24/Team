@@ -28,10 +28,10 @@ module "aks" {
 }
 
 # Resource group for vm, to solve regional quota
-resource "azurerm_resource_group" "rg-centralus" {
-  name     = "rg-tf-centraus"
-  location = "Central Us"
-}
+# resource "azurerm_resource_group" "rg-centralus" {
+#   name     = "rg-tf-centraus"
+#   location = "Central Us"
+# }
 
 # module "vm-vault" {
 #   source  = "./modules/vm-vault"
