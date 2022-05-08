@@ -43,7 +43,7 @@ jobs:
       uses: hashicorp/terraform-github-actions@master
       with:
         tf_actions_version: 0.14.8
-        tf_actions_subcommand: 'destry'
+        tf_actions_subcommand: 'destroy'
         tf_actions_working_dir: "./deploy/terraform"
         variables: |
           subscription_id: ${{ env.ARM_SUBSCRIPTION_ID }}
