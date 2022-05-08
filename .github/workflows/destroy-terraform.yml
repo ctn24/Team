@@ -20,7 +20,7 @@ jobs:
     - name: Import Secrets
       uses: hashicorp/vault-action@v2.4.0
       with:
-        url: http://40.77.51.162:8200
+        url: ${{ secrets.VAULT_ADDR }}
         tlsSkipVerify: true
         token: ${{ secrets.VAULT_TOKEN }}
         secrets: |
@@ -50,5 +50,3 @@ jobs:
           client_id: ${{ env.ARM_CLIENT_ID }}
           client_secret: ${{ env.ARM_CLIENT_SECRET }}
           tenant_id: ${{ env.ARM_TENANT_ID }}
-          admin_username: Darkirondan
-          admin_password: DanTheMan2022
