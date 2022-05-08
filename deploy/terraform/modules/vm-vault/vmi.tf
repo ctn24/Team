@@ -98,8 +98,7 @@ resource "azurerm_virtual_machine" "vm-vault" {
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Standard_LRS"
-}
-
+  }
   os_profile {
     computer_name  = "vm-vault-tf"
     admin_username = var.admin_username
