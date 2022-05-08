@@ -1,7 +1,7 @@
 #variables
 export SUB_ID="d9eadbf1-cd33-4831-86ff-6f0ce120d40c"
-export RG_NAME="rg-tfstate-westus"
-export STORAGE_ACCOUNT_NAME="storage00westus00tq9x"
+export RG_NAME="rg-infra"
+export STORAGE_ACCOUNT_NAME="storage00westus"
 export CONTAINER_NAME="terraform-state"
 export SP_NAME="sp-tf-westus"
 

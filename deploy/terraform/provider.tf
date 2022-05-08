@@ -15,10 +15,10 @@ terraform {
 
   }
   backend "azurerm" {
-    resource_group_name  = "rg-tfstate-westus"
-    storage_account_name = "storage00westus00tq9x"
+    resource_group_name  = "rg-infra"
+    storage_account_name = "storage00westus"
     container_name       = "terraform-state"
-    key                  = "CuuazLxEft9iAMNmrIlSt4uSYE5shyCtetXFL/7QuPe/6cq+4ofQHi5/Fx6WquxBEl2BqAnmHhn83HjWcaDyjw=="
+    key                  = "tfbackend.tf"
     //access_key           = ""
   }
 }

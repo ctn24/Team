@@ -5,8 +5,8 @@ variable "client_secret" { default = null }
 variable "tenant_id" { default = null }
 
 # Resource Group/Location
-variable "location" { default = "westus" }
-variable "rg_name" { default = "rg-tf" }
+variable "rg_location" { default = "westus" }
+variable "rg_name" { default = "rg-infra" }
 
 # ACR - Container Registry
 variable "acr_name" { default = "acr0tf" }
