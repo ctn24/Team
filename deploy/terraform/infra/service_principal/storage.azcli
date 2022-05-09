@@ -1,5 +1,5 @@
 #variables
-export SUB_ID="replace this"
+export SUB_ID="replace this with subscription ID"
 export AZ_LOCATION="westus"
 export RG_NAME="rg-infra"
 export STORAGE_ACCOUNT_NAME="storage00westus"
