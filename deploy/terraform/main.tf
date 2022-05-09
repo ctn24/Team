@@ -18,3 +18,5 @@ module "aks" {
   #location = module.resource_group.rg_location
   location = "westus2"
 }
+
+//clean
