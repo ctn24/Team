@@ -58,29 +58,29 @@ The basic scenario can be run locally using docker-compose, and also deployed to
 The advanced scenario deploys the project to Azure.
 Must have azure account and [az-cli](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli) installed,[terraform-cli](https://learn.hashicorp.com/tutorials/terraform/install-cli)
 
-##### Create Terraform Backend and Service Principal
+##### 1. Create Terraform Backend and Service Principal
 
-Go to 
-> deploy/terraform/infra/service_principal
-
-
-
-##### Manually create Vm for vault
+Follow the instruction to create an storage account and a service principal described in the file:
+> [deploy/terraform/infra/service_principal/storage.azcli](deploy/terraform/infra/service_principal/storage.azcli)
 
 
-##### Configure vault with Ansible
+
+##### 2. Manually create Vm for Vault & Packer
 
 
-##### Manually secrets in github actions
+##### 3. Configure vault with Ansible
 
 
-##### Push change is terraform to trigger Pipeline
+##### 4. Manually store credentials in Github Actions Secrets
 
 
-##### Upload docker images -> aks
+##### 5. Push change in terraform to trigger Pipeline
 
 
-##### Be happy
+##### 6. Upload docker images -> aks
+
+
+##### 7. Be happy
 
 
 ### Architecture overview

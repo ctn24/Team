@@ -1,0 +1,51 @@
+name: Continous Delivery CTN
+on:
+  workflow_dispatch:
+    branches:
+      - main
+jobs:
+  Deploy:
+    name: 'Deploy image from container'
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Import Secrets
+      uses: hashicorp/vault-action@v2.4.0
+      with:
+        url: ${{ secrets.VAULT_ADDR }}
+        tlsSkipVerify: true
+        token: ${{ secrets.VAULT_TOKEN }}
+        secrets: |
+            secret/data/ARM_SUBSCRIPTION_ID ARM_SUBSCRIPTION_ID;
+            secret/data/ARM_CLIENT_ID ARM_CLIENT_ID;
+            secret/data/ARM_CLIENT_SECRET ARM_CLIENT_SECRET;
+            secret/data/ARM_TENANT_ID ARM_TENANT_ID
+
+    - name: 'Az CLI login'
+      run: |
+          sudo apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
+          curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+          AZ_REPO=$(lsb_release -cs)
+          echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+          sudo apt-get update
+          sudo apt-get install azure-cli
+          az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+    
+    - name: 'ACR Health'
+      run: |
+          az acr login --name acr0tf.azurecr.io 
+          az acr check-health --name acr0tf.azurecr.io --ignore-errors --yes  
+
+    - name: Run file ps1
+      shell: pwsh
+      run: |
+        az aks get-credentials --resource-group rg-infra --name aks-tf
+        kubectl config get-contexts
+        ./deploy/k8s/helm/deploy-all-mac.ps1 -aksName aks-tf -aksRg rg-infra -imageTag linux-latest -registry acr0tf.azurecr.io -dockerUser acr0tf -dockerPassword 9c91jSNpxwJMqOkqXRERb2wvwB+txXke
+# ./deploy/k8s/helm/deploy-all-mac.ps1 -externalDns aks -aksName ctn-cluster -aksRg ctn-k8s -imageTag linux-dev -useMesh $false    
