@@ -1,0 +1,21 @@
+name: Continous Delivery
+on:
+  workflow_dispatch:
+    branches:
+      - main
+jobs:
+  Deploy:
+    name: 'Deploy image from container'
+    runs-on: ubuntu-latest
+    environment: production
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Run file ps1
+      shell: pwsh
+      run: |
+        ./deploy/k8s/helm/deploy-all-mac.ps1 -externalDns aks -aksName aks-tf -aksRg rg-infra -imageTag linux-latest -registry acr0tf.azurecr.io -dockerUser acr0tf -dockerPassword 9c91jSNpxwJMqOkqXRERb2wvwB+txXke -useMesh $false    
