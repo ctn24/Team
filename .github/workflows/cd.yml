@@ -44,13 +44,14 @@ jobs:
           sudo apt-get install helm
           kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml
           kubectl apply -f ./deploy/k8s/nginx-ingress/local-cm.yaml
+          ./deploy/k8s/helm/deploy-all-mac.ps1 -externalDns aks -aksName aks-tf -aksRg rg-infra -imageTag linux-latest -registry acr0tf.azurecr.io -dockerUser acr0tf -dockerPassword 9c91jSNpxwJMqOkqXRERb2wvwB+txXke -useMesh $false
     # - uses: azure/login@v1
     #   with:
     #       client-id: ${{ secrets.ARM_CLIENT_ID }}
     #       tenant-id: ${{ secrets.ARM_TENANT_ID }}
     #       subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
-    - name: Run file ps1
-      shell: pwsh
-      run: |
-        ./deploy/k8s/helm/deploy-all-mac.ps1 -aksName aks-tf -aksRg rg-infra -imageTag linux-latest -registry acr0tf.azurecr.io -dockerUser acr0tf -dockerPassword 9c91jSNpxwJMqOkqXRERb2wvwB+txXke
+    # - name: Run file ps1
+    #   shell: pwsh
+    #   run: |
+    #     ./deploy/k8s/helm/deploy-all-mac.ps1 -aksName aks-tf -aksRg rg-infra -imageTag linux-latest -registry acr0tf.azurecr.io -dockerUser acr0tf -dockerPassword 9c91jSNpxwJMqOkqXRERb2wvwB+txXke
