@@ -1,4 +1,4 @@
-name: Continous Delivery
+name: Continous Delivery CTN
 on:
   workflow_dispatch:
     branches:
