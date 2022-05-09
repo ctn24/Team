@@ -47,5 +47,9 @@ jobs:
     - name: Run file sh
       shell: pwsh
       run: |
+        cd src
+        docker-compose build
+        docker login acr0tf.azurecr.io --username acr0tf --password 9c91jSNpxwJMqOkqXRERb2wvwB+txXke
+        cd ..
         cd deploy/k8s/helm/
         sh deploy_manual.sh
