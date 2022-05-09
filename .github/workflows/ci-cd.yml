@@ -1,10 +1,9 @@
 name: Build and deploy an app to AKS with Helm
 
 on:
-  push:
+  workflow_dispatch:
     branches:
       - main
-  workflow_dispatch:
 
 env:
   AZURE_CONTAINER_REGISTRY: "acr0tf"
