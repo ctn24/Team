@@ -63,7 +63,7 @@ jobs:
           client_secret: ${{ env.ARM_CLIENT_SECRET }}
           tenant_id: ${{ env.ARM_TENANT_ID }}
           vault_address: ${{ env.VAULT_ADDR }}
-          terraform_token: ${{ env.ARM_TENANT_ID }}
+          terraform_token: ${{ env.TF_TOKEN }}
  
     - name: Terraform Apply
       uses: hashicorp/terraform-github-actions@master
@@ -77,4 +77,4 @@ jobs:
           client_secret: ${{ env.ARM_CLIENT_SECRET }}
           tenant_id: ${{ env.ARM_TENANT_ID }}
           vault_address: ${{ env.VAULT_ADDR }}
-          terraform_token: ${{ env.TERRAFORM_TOKEN }}
+          terraform_token: ${{ env.TF_TOKEN }}
