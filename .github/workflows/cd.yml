@@ -44,6 +44,7 @@ jobs:
           sudo apt-get install helm
           kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml
           kubectl apply -f ./deploy/k8s/nginx-ingress/local-cm.yaml
+          chmod +x ./deploy/k8s/helm/deploy-all-mac.ps1
           ./deploy/k8s/helm/deploy-all-mac.ps1 -externalDns aks -aksName aks-tf -aksRg rg-infra -imageTag linux-latest -registry acr0tf.azurecr.io -dockerUser acr0tf -dockerPassword 9c91jSNpxwJMqOkqXRERb2wvwB+txXke -useMesh $false
     # - uses: azure/login@v1
     #   with:
