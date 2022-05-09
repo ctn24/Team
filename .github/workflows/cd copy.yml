@@ -44,6 +44,7 @@ jobs:
           sudo apt-get install helm
           kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml
           kubectl apply -f ./deploy/k8s/nginx-ingress/local-cm.yaml
+          
     # - uses: azure/login@v1
     #   with:
     #       client-id: ${{ secrets.ARM_CLIENT_ID }}
