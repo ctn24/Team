@@ -1,0 +1,13 @@
+---
+# handlers file for vault_unseal
+- name: Restart vault
+  become: true
+  service:
+    name: vault
+    state: restarted
+
+- name: Reload vault
+  become: true
+  service:
+    name: vault
+    state: reloaded

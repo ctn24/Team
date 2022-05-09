@@ -4,34 +4,41 @@ export RG_NAME="rg-infra"
 export STORAGE_ACCOUNT_NAME="storage00westus"
 export CONTAINER_NAME="terraform-state"
 export SP_NAME="sp-tf-westus"
+export AZ_LOCATION="westus"
 
 # login to azure
 az login
 
 # create resource group for remote state
-az group create --location westus --name $RG_NAME
+az group create --location $AZ_LOCATION --name $RG_NAME
 
 # create storage account
-az storage account create --name $STORAGE_ACCOUNT_NAME --resource-group $RG_NAME --location westus --sku Standard_LRS
+az storage account create --name $STORAGE_ACCOUNT_NAME --resource-group $RG_NAME --location $AZ_LOCATION --sku Standard_LRS
 
 # get keys
-az storage account keys list --account-name $STORAGE_ACCOUNT_NAME --resource-group $RG_NAME 
-#az storage account keys list --resource-group rg-centralus --account-name storage00centralus00tq9x --query '[0].value' -o tsv
+#az storage account keys list --account-name $STORAGE_ACCOUNT_NAME --resource-group $RG_NAME 
+# get principal key
+
+export ACCOUNT_KEY=$(az storage account keys list --resource-group $RG_NAME --account-name $STORAGE_ACCOUNT_NAME --query '[0].value' -o tsv)
 
 #create blob container
 az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME --account-key $ACCOUNT_KEY
 
 # create Service Principal
 
-az ad sp create-for-rbac -n $SP_NAME --role Contributor --scopes /subscriptions/$SUB_ID/resourceGroups/$RG_NAME
+az ad sp create-for-rbac -n $SP_NAME --role Owner --scopes /subscriptions/$SUB_ID/resourceGroups/$RG_NAME
 
+# Take note of the credentials and use them to configure ansible/vault.
+
+# Output example:
 {
-  "appId": "a8595575-9d3b-429f-9e0c-e7c026dbfbbb",
-  "displayName": "sp-tf-westus",
-  "password": "yYVK1dhZxTP83GTmVu-o2UyIjb.YDNIDLJ",
-  "tenant": "3d76d15e-3586-4ab5-be8a-3639481a65d8"
+  "appId": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "displayName": "XXXXXXXXXXX",
+  "password": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+  "tenant": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 }
 
+#TODO
 ARM_CLIENT_ID: appId
 ARM_CLIENT_SECRET: password
 ARM_SUBSCRIPTION_ID: esta la encuentran en el portal

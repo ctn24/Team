@@ -5,6 +5,9 @@
 .history/
 .vshistory/
 
+deploy/ansible/rootKey
+deploy/ansible/unsealKey
+
 # User-specific files
 *.suo
 *.user
