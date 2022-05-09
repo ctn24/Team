@@ -1,11 +1,11 @@
-name: Continous Delivery
+name: Continous Integration
 on:
   workflow_dispatch:
     branches:
       - main
 jobs:
   Deploy:
-    name: 'Deploy image from container'
+    name: 'Upload image to container'
     runs-on: ubuntu-latest
     environment: production
     defaults:
@@ -37,22 +37,19 @@ jobs:
           sudo apt-get install azure-cli
           az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
           az aks get-credentials --resource-group rg-infra --name aks-tf
-          curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
-          sudo apt-get install apt-transport-https --yes
-          echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
-          sudo apt-get update
-          sudo apt-get install helm
+          
     # - uses: azure/login@v1
     #   with:
     #       client-id: ${{ secrets.ARM_CLIENT_ID }}
     #       tenant-id: ${{ secrets.ARM_TENANT_ID }}
     #       subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
-    - name: Run file ps1
+    - name: Run file sh
       shell: pwsh
       run: |
-        kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml
-        kubectl apply -f ./deploy/k8s/nginx-ingress/local-cm.yaml
+        cd src
+        docker-compose build
+        docker login acr0tf.azurecr.io --username acr0tf --password 9c91jSNpxwJMqOkqXRERb2wvwB+txXke
+        cd ..
         cd deploy/k8s/helm/
-        ./deploy-all-mac.ps1 -externalDns aks -aksName aks-tf -aksRg rg-infra -imageTag linux-latest -registry acr0tf.azurecr.io -dockerUser acr0tf -dockerPassword 9c91jSNpxwJMqOkqXRERb2wvwB+txXke -useMesh $false
-        kubectl apply -f aks-httpaddon-cfg.yaml
+        sh deploy_manual.sh

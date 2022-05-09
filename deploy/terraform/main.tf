@@ -9,7 +9,7 @@ output "acr_credentials" {
   value = module.container_registry.admin-password
   sensitive = true
 }
-
+//commit example
 module "aks" {
   source   = "./modules/aks"
   aks_name = var.aks_name
