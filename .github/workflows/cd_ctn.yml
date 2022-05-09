@@ -39,6 +39,7 @@ jobs:
     
     - name: 'ACR Health'
       run: |
+          az acr login --name acr0tf.azurecr.io 
           az acr check-health --name acr0tf.azurecr.io --ignore-errors --yes  
 
     - name: Run file ps1
