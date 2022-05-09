@@ -1,10 +1,10 @@
 #variables
-export SUB_ID="d9eadbf1-cd33-4831-86ff-6f0ce120d40c"
+export SUB_ID="replace this"
+export AZ_LOCATION="westus"
 export RG_NAME="rg-infra"
 export STORAGE_ACCOUNT_NAME="storage00westus"
 export CONTAINER_NAME="terraform-state"
 export SP_NAME="sp-tf-westus"
-export AZ_LOCATION="westus"
 
 # login to azure
 az login
@@ -17,7 +17,7 @@ az storage account create --name $STORAGE_ACCOUNT_NAME --resource-group $RG_NAME
 
 # get keys
 #az storage account keys list --account-name $STORAGE_ACCOUNT_NAME --resource-group $RG_NAME 
-# get principal key
+# get storage account key
 
 export ACCOUNT_KEY=$(az storage account keys list --resource-group $RG_NAME --account-name $STORAGE_ACCOUNT_NAME --query '[0].value' -o tsv)
 
@@ -28,7 +28,7 @@ az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOU
 
 az ad sp create-for-rbac -n $SP_NAME --role Owner --scopes /subscriptions/$SUB_ID/resourceGroups/$RG_NAME
 
-# Take note of the credentials and use them to configure ansible/vault.
+# Take note of the credentials because you will need them later to configure ansible/vault.
 
 # Output example:
 {
@@ -38,11 +38,14 @@ az ad sp create-for-rbac -n $SP_NAME --role Owner --scopes /subscriptions/$SUB_I
   "tenant": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 }
 
-#TODO
+#Map for vault "env variables" -> "sp output"
 ARM_CLIENT_ID: appId
 ARM_CLIENT_SECRET: password
 ARM_SUBSCRIPTION_ID: esta la encuentran en el portal
 ARM_TENANT_ID: tenant
+
+
+
 
 
 # Determine SP ID
@@ -68,3 +71,13 @@ az role assignment create --assignee "d2c2a7db-ce15-41e1-8f16-90591dbed259" \
   "type": "Microsoft.Authorization/roleAssignments"
 }
 
+
+
+az login --service-principal -u a8595575-9d3b-429f-9e0c-e7c026dbfbbb -p yYVK1dhZxTP83GTmVu-o2UyIjb.YDNIDLJ --tenant 3d76d15e-3586-4ab5-be8a-3639481a65d8
+
+{
+  "appId": "a8595575-9d3b-429f-9e0c-e7c026dbfbbb",
+  "displayName": "sp-tf-westus",
+  "password": "yYVK1dhZxTP83GTmVu-o2UyIjb.YDNIDLJ",
+  "tenant": "3d76d15e-3586-4ab5-be8a-3639481a65d8"
+}
