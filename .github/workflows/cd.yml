@@ -45,4 +45,4 @@ jobs:
     - name: Run file ps1
       shell: pwsh
       run: |
-        ./deploy/k8s/helm/deploy-all-mac.ps1 -externalDns aks -aksName aks-tf -aksRg rg-infra -imageTag linux-latest -registry acr0tf.azurecr.io -dockerUser acr0tf -dockerPassword 9c91jSNpxwJMqOkqXRERb2wvwB+txXke -useMesh $false    
+        ./deploy/k8s/helm/deploy-all-mac.ps1 -aksName aks-tf -aksRg rg-infra -imageTag linux-latest -registry acr0tf.azurecr.io -dockerUser acr0tf -dockerPassword 9c91jSNpxwJMqOkqXRERb2wvwB+txXke
