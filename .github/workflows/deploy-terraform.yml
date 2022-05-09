@@ -78,6 +78,16 @@ jobs:
           client_secret: ${{ env.ARM_CLIENT_SECRET }}
           tenant_id: ${{ env.ARM_TENANT_ID }}
 
+    - name: Import Secrets
+      if: always()
+      uses: hashicorp/vault-action@v2.4.0
+      with:
+        url: ${{ secrets.VAULT_ADDR }}
+        tlsSkipVerify: true
+        token: ${{ secrets.VAULT_TOKEN }}
+        secrets: |
+            secret/data/acr acr_pass
+
     - name: 'Az CLI login'
       if: always()
       run: |
@@ -100,3 +110,30 @@ jobs:
         cd ..
         cd deploy/k8s/helm/
         sh deploy_manual.sh
+
+    - name: 'Az CLI login'
+      if: always()
+      run: |
+          sudo apt-get install ca-certificates curl apt-transport-https lsb-release gnupg
+          curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+          AZ_REPO=$(lsb_release -cs)
+          echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+          sudo apt-get update
+          sudo apt-get install azure-cli
+          az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+          az aks get-credentials --resource-group rg-infra --name aks-tf
+          curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+          sudo apt-get install apt-transport-https --yes
+          echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+          sudo apt-get update
+          sudo apt-get install helm
+
+    - name: Run file ps1
+      if: always()
+      shell: pwsh
+      run: |
+        kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml
+        kubectl apply -f ./deploy/k8s/nginx-ingress/local-cm.yaml
+        cd deploy/k8s/helm/
+        ./deploy-all-mac.ps1 -externalDns aks -aksName aks-tf -aksRg rg-infra -imageTag linux-latest -registry acr0tf.azurecr.io -dockerUser acr0tf -dockerPassword $ACR_PASS -useMesh $false
+        kubectl apply -f aks-httpaddon-cfg.yaml
