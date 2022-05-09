@@ -30,6 +30,7 @@ jobs:
     - name: 'Az CLI login'
       uses: azure/login@v1
       with:
+        variables: |
           client-id: a8595575-9d3b-429f-9e0c-e7c026dbfbbb
           tenant-id: 3d76d15e-3586-4ab5-be8a-3639481a65d8
           subscription-id: d9eadbf1-cd33-4831-86ff-6f0ce120d40c
