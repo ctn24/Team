@@ -15,5 +15,5 @@ variable "acr_name" { default = "acr0tf" }
 variable "aks_name" { default = "aks-tf" }
 
 # Vault
-variable "vault_address" {default = null}
-variable "terraform_token" {default = null}
+//variable "vault_address" {default = null}
+//variable "terraform_token" {default = null}
