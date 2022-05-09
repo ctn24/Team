@@ -1,5 +1,7 @@
 
 #!/usr/bin/env bash
+
+
 docker tag eshop/mobileshoppingagg:linux-latest acr0tf.azurecr.io/eshop/mobileshoppingagg:linux-latest
 docker tag eshop/basket.api:linux-latest acr0tf.azurecr.io/eshop/basket.api:linux-latest
 docker tag eshop/catalog.api:linux-latest acr0tf.azurecr.io/eshop/catalog.api:linux-latest

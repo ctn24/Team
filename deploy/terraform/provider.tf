@@ -6,6 +6,11 @@ provider "azurerm" {
   features {}
 }
 
+provider "vault" {
+  address = var.vault_address
+  token = var.terraform_token
+}
+
 terraform {
   required_providers {
     azurerm = {
