@@ -8,7 +8,7 @@ provider "azurerm" {
 
 provider "vault" {
   address = var.vault_address
-  token = var.terraform_token
+  token = "hvs.CAESIH0wlME9DyOek7Y2WX_bY8P0WB73h2M2NUSB9GsphqDyGh4KHGh2cy5qRmI3MXR0SjRXQml4ejNON2FtUmNab08"
 }
 
 terraform {
