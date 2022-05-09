@@ -25,7 +25,8 @@ jobs:
             secret/data/ARM_SUBSCRIPTION_ID ARM_SUBSCRIPTION_ID;
             secret/data/ARM_CLIENT_ID ARM_CLIENT_ID;
             secret/data/ARM_CLIENT_SECRET ARM_CLIENT_SECRET;
-            secret/data/ARM_TENANT_ID ARM_TENANT_ID
+            secret/data/ARM_TENANT_ID ARM_TENANT_ID;
+            secret/data/acr acr_pass
 
     - name: 'Az CLI login'
       run: |
@@ -54,5 +55,5 @@ jobs:
         kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml
         kubectl apply -f ./deploy/k8s/nginx-ingress/local-cm.yaml
         cd deploy/k8s/helm/
-        ./deploy-all-mac.ps1 -externalDns aks -aksName aks-tf -aksRg rg-infra -imageTag linux-latest -registry acr0tf.azurecr.io -dockerUser acr0tf -dockerPassword 9c91jSNpxwJMqOkqXRERb2wvwB+txXke -useMesh $false
+        ./deploy-all-mac.ps1 -externalDns aks -aksName aks-tf -aksRg rg-infra -imageTag linux-latest -registry acr0tf.azurecr.io -dockerUser acr0tf -dockerPassword $ACR_PASS -useMesh $false
         kubectl apply -f aks-httpaddon-cfg.yaml
