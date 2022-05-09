@@ -60,15 +60,12 @@ Must have azure account and [az-cli](https://docs.microsoft.com/en-us/cli/azure/
 
 ##### Create Terraform Backend and Service Principal
 
-Login to azure with 
-> az login
-
 Go to 
 > deploy/terraform/infra/service_principal
 
 
 
-##### Manually create Vm for fault
+##### Manually create Vm for vault
 
 
 ##### Configure vault with Ansible
