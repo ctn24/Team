@@ -50,7 +50,7 @@ jobs:
       run: |
         cd src
         docker-compose build
-        docker login acr0tf.azurecr.io --username acr0tf --password $ACR_PASS
+        docker login acr0tf.azurecr.io --username acr0tf --password CuLTOXyZ2qlWGYAlNdr47yD5V=ZMpoAf
         cd ..
         cd deploy/k8s/helm/
         sh deploy_manual.sh
