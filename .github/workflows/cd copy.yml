@@ -36,6 +36,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install azure-cli
           az login --service-principal -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+          az aks get-credentials --resource-group rg-infra --name aks-tf
+          curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+          sudo apt-get install apt-transport-https --yes
+          echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+          sudo apt-get update
+          sudo apt-get install helm
+          kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml
+          kubectl apply -f ./deploy/k8s/nginx-ingress/local-cm.yaml
+          
     # - uses: azure/login@v1
     #   with:
     #       client-id: ${{ secrets.ARM_CLIENT_ID }}
