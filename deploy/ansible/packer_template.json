@@ -1,0 +1,40 @@
+{
+    "variables": {
+        "resourcegroup": "dan-rodriguez-tm"
+    },
+    "builders": [
+        {
+            "type": "azure-arm",
+  
+            "use_azure_cli_auth": true,
+  
+            "os_type": "Linux",
+            "image_publisher": "Canonical",
+            "image_offer": "UbuntuServer",
+            "image_sku": "18.04-LTS",
+            "managed_image_name": "Vault-image",
+            "managed_image_resource_group_name": "{{user `resourcegroup`}}",
+            "build_resource_group_name": "{{user `resourcegroup`}}",
+  
+            "azure_tags": {
+                "version": "v1",
+                "application": "vault",
+                "team": "dou-university"
+            },
+  
+            "vm_size": "Standard_DS1",
+            "custom_resource_build_prefix": "temporal",
+  
+            "communicator": "ssh",
+            "ssh_timeout": "1m"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "ansible",
+            "playbook_file": "./playbook_image.yaml",
+            "use_proxy": false
+        }
+    ]
+  }
+  

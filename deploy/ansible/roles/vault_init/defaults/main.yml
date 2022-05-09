@@ -1,0 +1,5 @@
+---
+# defaults file for vault_init
+unseal_keys_dir_output: "{{ playbook_dir }}/unsealKey"
+root_token_dir_output: "{{ playbook_dir }}/rootKey"
+vault_addr: "http://127.0.0.1:8200"

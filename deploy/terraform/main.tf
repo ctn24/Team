@@ -19,4 +19,14 @@ module "aks" {
   location = "westus2"
 }
 
+resource "vault_generic_secret" "example" {
+  path = "secret/acr"
+
+  data_json = jsonencode(
+    {
+      "acr_pass"   = module.container_registry.admin-password
+    }
+  )
+}
+
 //clean

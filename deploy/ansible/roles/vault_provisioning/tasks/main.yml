@@ -1,0 +1,58 @@
+---
+# tasks file for vault_provisioning
+- name: Update and upgrade apt
+  ansible.builtin.apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: Installing Unzip
+  ansible.builtin.apt:
+    name: "unzip"
+    state: present
+
+- name: "Download Vault"
+  get_url:
+    url: "https://releases.hashicorp.com/vault/1.10.2/vault_1.10.2_linux_amd64.zip"
+    dest: "/tmp/vault_1.10.2_linux_amd64.zip"
+    timeout: "42"
+
+- name: Unarchive Vault and install binary
+  become: true
+  unarchive:
+    remote_src: true
+    src: "/tmp/vault_1.10.2_linux_amd64.zip"
+    dest: "/usr/local/bin"
+
+- name: ansible create directory with mode
+  file:
+    path: /home/vault/data
+    state: directory
+    mode: "u=rw,g=wx,o=rwx"
+
+- name: Create directory
+  file:
+    path: /etc/vault
+    state: directory
+    mode: "u=rw,g=wx,o=rwx"
+
+- name: Copy HCL file
+  become: true
+  copy:
+    src: ./files/config.hcl 
+    dest: /etc/vault/config.hcl
+    mode: "u=rw,g=wx,o=rwx"
+
+- name: Copy service file
+  become: true
+  copy:
+    src: ./files/vault.service
+    dest: /etc/systemd/system/vault.service
+    mode: "u=rw,g=wx,o=rwx"
+
+- name: Start vault service
+  become: true
+  ansible.builtin.systemd:
+    daemon_reload: true
+    name: vault.service
+    state: started
+    enabled: true
